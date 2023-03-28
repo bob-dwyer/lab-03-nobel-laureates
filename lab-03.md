@@ -1,7 +1,7 @@
 Lab 03 - Nobel laureates
 ================
-Insert your name here
-Insert date here
+Bob D
+28Mar23
 
 ### Load packages and data
 
