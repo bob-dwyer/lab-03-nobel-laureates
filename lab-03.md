@@ -17,30 +17,34 @@ nobel <- read_csv("data/nobel.csv")
 
 ### Exercise 1
 
-Remove this text, and add your answer for Exercise 1 here. Add code
-chunks as needed. Don’t forget to label your code chunk. Do not use
-spaces in code chunk labels.
+``` r
+#How many variables are in the dataset?
+nobel %>%
+  ncol()
+```
+
+    ## [1] 26
+
+``` r
+#Each row represents a winner. Number of winners?
+nobel %>%
+  nrow()
+```
+
+    ## [1] 935
 
 ### Exercise 2
 
-Remove this text, and add your answer for Exercise 1 here. Add code
-chunks as needed. Don’t forget to label your code chunk. Do not use
-spaces in code chunk labels.
+``` r
+#Create a new data frame called nobel_living that includes only observations of living people for which country data is available. 
+novel_living <- nobel %>%
+  filter(!is.na(country),gender != "org", is.na(died_date))
+```
 
 ### Exercise 3
 
-Remove this text, and add your answer for Exercise 1 here. Add code
-chunks as needed. Don’t forget to label your code chunk. Do not use
-spaces in code chunk labels.
-
 ### Exercise 4
-
-…
 
 ### Exercise 5
 
-…
-
 ### Exercise 6
-
-…
