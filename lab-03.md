@@ -61,14 +61,86 @@ nobel_living_science %>%
   geom_bar() +
   coord_flip() +
   facet_wrap(~ category) +
-  labs(title = "Most living Nobel laureates were based in the US when they won their prizes",
-       x = "Location of Novbl laureates when awared prize (in US or not)",
+  labs(title = "Most living Nobel laureates were living in the US when they won their prizes",
+       x = "Location of Nobel laureates when awared prize (in US or not)",
        y = "Number of Winners") 
 ```
 
 ![](lab-03_files/figure-gfm/unnamed-chunk-3-1.png)<!-- --> \### Exercise
 4
 
+``` r
+#Creates new variable called born_country_us to indicate laureate who is US born (or not)
+nobel_living_science <- nobel_living_science %>%
+  mutate(
+    born_country_us = if_else(born_country == "USA", "USA", "Other")
+  )
+
+#How many of the winners are born in the US?
+nobel_living_science %>%
+  group_by(born_country_us) %>%
+  summarize(n = n())
+```
+
+    ## # A tibble: 2 x 2
+    ##   born_country_us     n
+    ##   <chr>           <int>
+    ## 1 Other             123
+    ## 2 USA               105
+
+``` r
+#105 Nobel laureates in the Physics, Medicine, Chemistry, and Economics fields were born in the US (123 outside of US)
+```
+
 ### Exercise 5
 
+``` r
+#Data visualization
+nobel_living_science %>%
+  ggplot(aes(x = country_us,fill = born_country_us)) +
+  geom_bar() +
+  coord_flip() +
+  facet_wrap(~ category) +
+  labs(title = "Most living Nobel laureates were living in the US when they won their prizes",
+       x = "Location of Nobel laureates when awared prize (in US or not)",
+       y = "Number of Winners",
+       caption = "Color represent whether US born (blue) or not (orange")
+```
+
+![](lab-03_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+
+``` r
+#Based on your visualization, do the data appear to support Buzzfeed’s claim?
+#Claim 1: Most living Nobel laureates were based in the US when they won their prizes.
+#Claim 2: But of those US-based Nobel laureates, many were born in other countries.
+#More living laureates were indeed living with the US when they won their prize; however, there were more laureates who were living in the US 
+#when they won their prize were also born US born.
+```
+
 ### Exercise 6
+
+``` r
+nobel_living_science %>%
+  filter(country == "USA", born_country_us == "Other") %>%
+  count(born_country) %>%
+  arrange(desc(n))
+```
+
+    ## # A tibble: 21 x 2
+    ##    born_country       n
+    ##    <chr>          <int>
+    ##  1 Germany            7
+    ##  2 United Kingdom     7
+    ##  3 China              5
+    ##  4 Canada             4
+    ##  5 Japan              3
+    ##  6 Australia          2
+    ##  7 Israel             2
+    ##  8 Norway             2
+    ##  9 Austria            1
+    ## 10 Finland            1
+    ## # ... with 11 more rows
+
+``` r
+#Germany and the UK have the most laureates that won their award in the US, but were born outside of the US.
+```
